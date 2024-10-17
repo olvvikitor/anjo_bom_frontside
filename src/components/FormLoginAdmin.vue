@@ -12,7 +12,7 @@
           placeholder="Digite seu email"
         />
       </div>
-      
+
       <div class="form-group">
         <label for="password">Senha:</label>
         <input
@@ -37,39 +37,41 @@ export default {
         email: '',
         password: ''
       }
-    };
+    }
   },
   methods: {
     submitForm() {
-      fetch('http://localhost:5000/admin/auth', {
+      fetch('https://apianjobom.victordev.shop/admin/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(this.login)
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            throw new Error('Erro na solicitação');
+            throw new Error('Erro na solicitação')
           }
-          return response.json();
+          return response.json()
         })
-        .then(data => {
+        .then((data) => {
           if (data.token) {
             // Armazene o token no armazenamento local ou em um cookie
-            localStorage.setItem('authToken', data.token);
-            console.log('Login bem-sucedido:', data);
-            // Redirecione o usuário ou atualize a interface conforme necessário
+            localStorage.setItem('authToken', data.token)
+            console.log('Login bem-sucedido:', data)
+            // Redirecione o usuário após o login bem-sucedido
+            // this.$router.push('/show-all'); // Supondo que você esteja usando Vue Router
+            window.location.href = '/admin/show-all'
           } else {
-            console.error('Token não recebido');
+            console.error('Token não recebido')
           }
         })
-        .catch(error => {
-          console.error('Erro no login:', error);
-        });
+        .catch((error) => {
+          console.error('Erro no login:', error)
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>
